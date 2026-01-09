@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - Georgia State Roleplay</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <img src="/images/logo.png" alt="Georgia State Roleplay Logo" class="logo-image">
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/auth/logout" class="btn btn-secondary" style="padding: 0.5rem 1.25rem;">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <div class="dashboard-header slide-in-up">
+                <div>
+                    <h1 style="margin-bottom: 0.25rem;">Staff Dashboard</h1>
+                    <p id="user-info" style="color: var(--text-muted); font-size: 0.95rem;"></p>
+                </div>
+                <div>
+                    <a href="/auth/logout" class="btn btn-secondary">Logout</a>
+                </div>
+            </div>
+
+            <div class="dashboard-stats slide-in-up" style="animation-delay: 0.1s;">
+                <div class="stat-card">
+                    <h3 id="stat-pending">-</h3>
+                    <p>Pending</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-accepted">-</h3>
+                    <p>Accepted</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-denied">-</h3>
+                    <p>Denied</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-total">-</h3>
+                    <p>Total</p>
+                </div>
+            </div>
+
+            <div class="slide-in-up" style="animation-delay: 0.2s;">
+                <h2 style="margin-bottom: 1.5rem; color: var(--secondary-color);">Applications</h2>
+                <div id="applications-container">
+                    <div style="text-align: center; padding: 3rem;">
+                        <div style="width: 50px; height: 50px; border: 3px solid var(--primary-color); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+                        <p style="color: var(--text-muted);">Loading applications...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Application Detail Modal -->
+    <div id="application-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Application Details</h2>
+                <button class="modal-close" onclick="closeApplicationModal()">&times;</button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; text-align: center;">
+                <p>&copy; 2024 Georgia State Roleplay. All rights reserved.</p>
+                <p style="color: var(--primary-color); font-weight: 500;">Roleplay you can rely on.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+    <script src="/js/dashboard.js"></script>
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>

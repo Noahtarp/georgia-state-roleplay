@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications - Georgia State Roleplay</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <style>
+        /* Application Type Selection */
+        .application-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .application-type-card {
+            background: var(--gradient-card);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .application-type-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .application-type-card:hover::before,
+        .application-type-card.selected::before {
+            transform: scaleX(1);
+        }
+
+        .application-type-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .application-type-card.selected {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 30px rgba(253, 205, 4, 0.2);
+        }
+
+        .application-type-card .card-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.25rem;
+            background: rgba(253, 205, 4, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .application-type-card:hover .card-icon,
+        .application-type-card.selected .card-icon {
+            background: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .application-type-card:hover .card-icon svg,
+        .application-type-card.selected .card-icon svg {
+            stroke: #000;
+        }
+
+        .application-type-card .card-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--primary-color);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .application-type-card h3 {
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .application-type-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .application-type-card .select-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .application-type-card.selected .select-badge {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .application-type-card.selected .select-badge::after {
+            content: '✓';
+            color: #000;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Form Section */
+        .application-form-section {
+            display: none;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        .application-form-section.active {
+            display: block;
+        }
+
+        .selected-type-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .selected-type-header h3 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .selected-type-header p {
+            color: var(--text-muted);
+        }
+
+        .change-selection-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .change-selection-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <img src="/images/logo.png" alt="Georgia State Roleplay Logo" class="logo-image">
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/applications" class="btn">Apply</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" style="min-height: 40vh;">
+            <div class="hero-content fade-in">
+                <h1>Applications</h1>
+                <p class="tagline">Join our whitelisted positions</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <!-- Step 1: Select Application Type -->
+                <div id="type-selection" class="slide-in-up">
+                    <h2 class="section-title">Choose Your Path</h2>
+                    <div class="divider"></div>
+                    <p class="section-subtitle">Select the position you'd like to apply for</p>
+
+                    <div class="application-types">
+                        <!-- Staff Card -->
+                        <div class="application-type-card" data-type="staff">
+                            <div class="select-badge"></div>
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                    <path d="M2 17l10 5 10-5"/>
+                                    <path d="M2 12l10 5 10-5"/>
+                                </svg>
+                            </div>
+                            <h3>Staff</h3>
+                            <p>Join our moderation team and help maintain the quality of roleplay in our community.</p>
+                        </div>
+
+                        <!-- GSP Card -->
+                        <div class="application-type-card" data-type="gsp">
+                            <div class="select-badge"></div>
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                            </div>
+                            <h3>Georgia State Patrol</h3>
+                            <p>Patrol the highways and enforce traffic laws as a member of the elite State Patrol.</p>
+                        </div>
+
+                        <!-- FBI Card -->
+                        <div class="application-type-card" data-type="fbi">
+                            <div class="select-badge"></div>
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                            </div>
+                            <h3>FBI</h3>
+                            <p>Handle federal investigations and take on high-profile cases as an FBI agent.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Application Form -->
+                <div id="application-form-section" class="application-form-section">
+                    <!-- Banner -->
+                    <div id="application-banner-container" class="application-banner-container"></div>
+
+                    <div class="selected-type-header">
+                        <h3 id="selected-type-title">Application Form</h3>
+                        <p id="selected-type-description">Fill out the form below to submit your application</p>
+                        <button class="change-selection-btn" id="change-selection-btn">← Change Selection</button>
+                    </div>
+                    
+                    <div class="form-container">
+                        <form id="application-form">
+                            <div class="form-group">
+                                <label for="discord-user-id">Discord User ID *</label>
+                                <input type="text" id="discord-user-id" name="discordUserId" required 
+                                       placeholder="Your Discord User ID (e.g., 123456789012345678)">
+                                <small style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem; display: block;">
+                                    Right-click your profile in Discord → Copy User ID (Enable Developer Mode first)
+                                </small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="discord-username">Discord Username *</label>
+                                <input type="text" id="discord-username" name="discordUsername" required 
+                                       placeholder="Your Discord username (e.g., username)">
+                            </div>
+
+                            <input type="hidden" id="application-type" name="applicationType" value="">
+
+                            <div id="application-questions"></div>
+
+                            <div id="form-message" class="hidden" style="margin-bottom: 1.5rem; padding: 1rem; border-radius: 10px;"></div>
+
+                            <div style="text-align: center; margin-top: 2rem;">
+                                <button type="submit" class="btn" style="padding: 1rem 3rem;">Submit Application</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; text-align: left;">
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/faq">FAQ</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/applications">Applications</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/KC2HT2R9K2" target="_blank">Discord Server</a></li>
+                        <li><a href="/applications">Staff Applications</a></li>
+                        <li><a href="/applications">GSP Applications</a></li>
+                        <li><a href="/applications">FBI Applications</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; text-align: center;">
+                <p>&copy; 2024 Georgia State Roleplay. All rights reserved.</p>
+                <p style="color: var(--primary-color); font-weight: 500;">Roleplay you can rely on.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+    <script src="/js/applications.js"></script>
+</body>
+</html>
+

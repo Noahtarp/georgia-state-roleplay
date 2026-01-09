@@ -1,0 +1,24 @@
+{
+  "name": "gsrp-ticket-bot",
+  "version": "1.0.0",
+  "description": "Georgia State Roleplay - Discord Ticket Bot",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "node --watch bot.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "tickets",
+    "gsrp"
+  ],
+  "author": "Georgia State Roleplay",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1"
+  }
+}
+
+

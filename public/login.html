@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login - Georgia State Roleplay</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <img src="/images/logo.png" alt="Georgia State Roleplay Logo" class="logo-image">
+            </a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/applications" class="btn">Apply</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" style="min-height: 70vh;">
+            <div class="hero-content">
+                <h1 class="fade-in">Staff Dashboard</h1>
+                <p class="tagline fade-in">Access restricted to authorized staff members</p>
+                
+                <div class="form-container slide-in-up" style="margin-top: 2.5rem; max-width: 500px;">
+                    <div id="error-message" class="hidden" style="background: rgba(220, 53, 69, 0.15); color: #dc3545; padding: 1rem 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; border: 1px solid rgba(220, 53, 69, 0.3);">
+                    </div>
+                    
+                    <p style="text-align: center; margin-bottom: 2rem; color: var(--text-muted);">
+                        Please log in with your Discord account. Only staff members with the required Discord roles can access the dashboard.
+                    </p>
+                    
+                    <div style="text-align: center;">
+                        <a href="/auth/discord" class="btn" style="padding: 1rem 2.5rem;">
+                            Login with Discord
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; text-align: center;">
+                <p>&copy; 2024 Georgia State Roleplay. All rights reserved.</p>
+                <p style="color: var(--primary-color); font-weight: 500;">Roleplay you can rely on.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+    <script>
+        // Check for error in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        
+        if (error) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.classList.remove('hidden');
+            
+            let errorText = 'An error occurred during login.';
+            if (error === 'unauthorized') {
+                errorText = 'You do not have permission to access the staff dashboard. Only authorized staff members can log in.';
+            } else if (error === 'invalid_state') {
+                errorText = 'Invalid login state. Please try again.';
+            } else if (error === 'oauth_failed') {
+                errorText = 'Discord authentication failed. Please try again.';
+            }
+            
+            errorDiv.textContent = errorText;
+        }
+    </script>
+</body>
+</html>
