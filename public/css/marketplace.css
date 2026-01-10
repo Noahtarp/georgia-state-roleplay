@@ -2,6 +2,18 @@
  * Georgia State Roleplay - Marketplace Styles
  */
 
+/* Touch-friendly improvements */
+.product-card,
+.product-card-full,
+.step-card,
+.help-card,
+.term-item,
+.marketplace-nav > a,
+.cta-buttons .btn {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
 /* Marketplace Hero */
 .marketplace-hero {
     min-height: 70vh;
@@ -11,33 +23,30 @@
         linear-gradient(180deg, var(--bg-color) 0%, var(--dark-bg) 100%);
 }
 
+/* Override base hero pseudo-elements */
+.marketplace-hero::before,
+.marketplace-hero::after {
+    display: none;
+}
+
+/* Remove any box/border from hero content */
+.marketplace-hero .hero-content,
+.marketplace-hero .hero-content.fade-in {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    max-width: 800px;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Hide the decorative glow element */
 .marketplace-hero .hero-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(253, 205, 4, 0.1) 0%, transparent 70%);
-    pointer-events: none;
-    animation: pulse 4s ease-in-out infinite;
+    display: none;
 }
 
-.marketplace-badge {
-    display: inline-block;
-    background: rgba(253, 205, 4, 0.15);
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
-    padding: 0.5rem 1.25rem;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-}
-
-/* Marketplace Navigation */
+/* Marketplace Sub-Navigation (for marketplace internal pages) */
 .marketplace-nav {
     display: flex;
     justify-content: center;
@@ -50,7 +59,7 @@
     border: 1px solid var(--border-color);
 }
 
-.marketplace-nav a {
+.marketplace-nav > a {
     padding: 0.75rem 1.5rem;
     color: var(--text-muted);
     text-decoration: none;
@@ -58,14 +67,19 @@
     font-weight: 500;
     transition: all 0.3s ease;
     font-size: 0.95rem;
+    display: inline-block;
 }
 
-.marketplace-nav a:hover {
+.marketplace-nav > a::after {
+    display: none;
+}
+
+.marketplace-nav > a:hover {
     color: var(--secondary-color);
     background: rgba(255, 255, 255, 0.05);
 }
 
-.marketplace-nav a.active {
+.marketplace-nav > a.active {
     color: #000;
     background: var(--primary-color);
 }
@@ -749,84 +763,401 @@
     .products-grid.three-col {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .marketplace-hero {
+        min-height: 60vh;
+    }
+
+    .marketplace-hero .hero-glow {
+        width: 400px;
+        height: 400px;
+    }
 }
 
 @media (max-width: 768px) {
+    /* Hero adjustments */
+    .marketplace-hero {
+        min-height: auto;
+        padding-top: 100px;
+        padding-bottom: 60px;
+    }
+
+    .marketplace-hero .hero-glow {
+        width: 300px;
+        height: 300px;
+        opacity: 0.5;
+    }
+
+    /* Product grids */
     .products-grid,
     .products-grid.three-col {
         grid-template-columns: 1fr;
     }
 
-    .steps-grid {
+    .product-showcase {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
-    .help-options {
-        grid-template-columns: 1fr;
+    /* Product cards */
+    .product-card {
+        padding: 2rem;
     }
 
-    .purchase-info-section {
-        grid-template-columns: 1fr;
+    .product-card:hover {
+        transform: none;
     }
 
-    .marketplace-nav {
-        gap: 0.25rem;
+    .product-icon {
+        width: 70px;
+        height: 70px;
     }
 
-    .marketplace-nav a {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
+    .product-icon svg {
+        width: 35px;
+        height: 35px;
     }
 
-    .product-features.horizontal {
-        grid-template-columns: 1fr;
+    .product-card h3 {
+        font-size: 1.3rem;
     }
 
-    .payment-info {
-        flex-direction: column;
-        text-align: center;
+    /* Full product cards */
+    .product-card-full:hover {
+        transform: none;
     }
 
-    .marketplace-cta {
-        padding: 2.5rem 1.5rem;
-    }
-
-    .marketplace-cta h2 {
-        font-size: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
     .product-header {
-        flex-direction: column;
-        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .product-body {
+        padding: 0 1.5rem;
+    }
+
+    .product-footer {
+        padding: 1.25rem 1.5rem 1.5rem;
+    }
+
+    .product-icon-large {
+        width: 50px;
+        height: 50px;
+    }
+
+    .product-icon-large svg {
+        width: 26px;
+        height: 26px;
     }
 
     .product-title-section h3 {
         font-size: 1.2rem;
     }
 
+    /* Steps grid */
+    .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .step-card {
+        padding: 1.5rem;
+    }
+
+    .step-number {
+        width: 45px;
+        height: 45px;
+        font-size: 1.25rem;
+    }
+
+    /* Help options */
+    .help-options {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* Purchase info */
+    .purchase-info-section {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .info-card {
+        padding: 1.5rem;
+    }
+
+    /* Marketplace nav */
+    .marketplace-nav {
+        gap: 0.25rem;
+        padding: 0.4rem;
+        margin-bottom: 2rem;
+    }
+
+    .marketplace-nav > a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    /* Product features */
+    .product-features.horizontal {
+        grid-template-columns: 1fr;
+    }
+
+    .product-features li {
+        font-size: 0.9rem;
+        padding: 0.4rem 0;
+        padding-left: 1.5rem;
+    }
+
+    /* Payment info */
+    .payment-info {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .payment-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .payment-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* CTA */
+    .marketplace-cta {
+        padding: 2rem 1.25rem;
+    }
+
+    .marketplace-cta h2 {
+        font-size: 1.4rem;
+    }
+
+    .marketplace-cta p {
+        font-size: 0.95rem;
+    }
+
+    /* About sections */
+    .about-section h2 {
+        font-size: 1.3rem;
+    }
+
+    /* Policy cards */
+    .policy-card {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .policy-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .policy-section h2 {
+        font-size: 1.3rem;
+    }
+
+    /* Term items */
+    .term-item {
+        padding: 1.25rem;
+    }
+
+    .term-item h4 {
+        font-size: 0.95rem;
+    }
+
+    /* Prohibited items */
+    .prohibited-item {
+        padding: 0.875rem 1rem;
+    }
+
+    /* Category titles */
+    .category-title {
+        font-size: 1.5rem;
+    }
+
+    /* Benefits list */
+    .benefits-list li {
+        padding: 0.6rem 0;
+        padding-left: 1.5rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Hero adjustments */
+    .marketplace-hero {
+        padding-top: 80px;
+        padding-bottom: 50px;
+    }
+
+    .marketplace-hero .hero-glow {
+        display: none;
+    }
+
+    /* Product header */
+    .product-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.25rem;
+    }
+
+    .product-title-section {
+        text-align: center;
+    }
+
+    .product-title-section h3 {
+        font-size: 1.1rem;
+    }
+
+    .product-body {
+        padding: 0 1.25rem;
+    }
+
+    /* Product footer */
     .product-footer {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
+        padding: 1rem 1.25rem 1.25rem;
     }
 
     .product-footer .btn {
         width: 100%;
     }
 
+    .product-price .amount {
+        font-size: 1.5rem;
+    }
+
+    /* Product cards */
+    .product-card {
+        padding: 1.5rem;
+    }
+
+    .product-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .product-card p {
+        font-size: 0.9rem;
+    }
+
+    /* Policy cards */
     .policy-card {
         flex-direction: column;
         text-align: center;
+        padding: 1.25rem;
     }
 
+    /* CTA buttons */
     .cta-buttons {
         flex-direction: column;
     }
 
     .cta-buttons .btn {
         width: 100%;
+    }
+
+    /* Marketplace nav */
+    .marketplace-nav {
+        padding: 0.35rem;
+    }
+
+    .marketplace-nav > a {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.75rem;
+        flex: 1;
+        text-align: center;
+    }
+
+    /* Info card */
+    .info-card {
+        padding: 1.25rem;
+    }
+
+    .info-card h3 {
+        font-size: 1.1rem;
+    }
+
+    /* CTA section */
+    .marketplace-cta h2 {
+        font-size: 1.25rem;
+    }
+
+    .marketplace-cta p {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Step cards */
+    .step-card {
+        padding: 1.25rem;
+    }
+
+    .step-card h3 {
+        font-size: 1rem;
+    }
+
+    .step-card p {
+        font-size: 0.85rem;
+    }
+
+    /* Help cards */
+    .help-card {
+        padding: 1.25rem;
+    }
+
+    .help-card h4 {
+        font-size: 1rem;
+    }
+
+    /* Agreement box */
+    .agreement-box {
+        padding: 1.25rem;
+    }
+
+    .agreement-box p {
+        font-size: 0.9rem;
+    }
+
+    /* Category */
+    .category-title {
+        font-size: 1.3rem;
+    }
+
+    .category-description {
+        font-size: 0.9rem;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+    .marketplace-nav > a {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .product-card {
+        padding: 1.25rem;
+    }
+
+    .marketplace-cta {
+        padding: 1.5rem 1rem;
+    }
+
+    .marketplace-cta h2 {
+        font-size: 1.15rem;
+    }
+
+    .category-title {
+        font-size: 1.2rem;
+    }
+
+    .about-section h2,
+    .policy-section h2 {
+        font-size: 1.15rem;
     }
 }
 
