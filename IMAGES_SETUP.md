@@ -79,3 +79,4 @@ Make sure your images complement these colors, especially if they have backgroun
 - **Responsive:** All images automatically resize for mobile devices
 
 
+

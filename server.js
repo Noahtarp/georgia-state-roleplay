@@ -93,6 +93,27 @@ app.get('/apply', (req, res) => {
     res.redirect('/applications');
 });
 
+// Marketplace routes
+app.get('/marketplace', (req, res) => {
+    res.redirect('/marketplace/home');
+});
+
+app.get('/marketplace/home', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'marketplace', 'home.html'));
+});
+
+app.get('/marketplace/about', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'marketplace', 'about.html'));
+});
+
+app.get('/marketplace/policy', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'marketplace', 'policy.html'));
+});
+
+app.get('/marketplace/buy', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'marketplace', 'buy.html'));
+});
+
 // 404 handler - must be after all other routes
 app.use((req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));

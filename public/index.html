@@ -6,34 +6,402 @@
     <title>Georgia State Roleplay - Roleplay you can rely on</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="icon" type="image/png" href="/images/logo.png">
+    <style>
+        /* Homepage Hero with Background Image */
+        .hero-homepage {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center right;
+        }
+
+        /* Fallback gradient if no image */
+        .hero-background {
+            background: linear-gradient(
+                135deg,
+                rgba(10, 10, 10, 1) 0%,
+                rgba(15, 15, 15, 1) 50%,
+                rgba(30, 30, 30, 1) 100%
+            );
+        }
+
+        /* Gradient overlay - fades image to black on the left */
+        .hero-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                270deg,
+                rgba(10, 10, 10, 0) 0%,
+                rgba(10, 10, 10, 0.3) 30%,
+                rgba(10, 10, 10, 0.7) 50%,
+                rgba(10, 10, 10, 0.95) 70%,
+                rgba(10, 10, 10, 1) 85%
+            );
+        }
+
+        /* Additional vertical gradient for bottom fade */
+        .hero-background::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(10, 10, 10, 1) 0%, transparent 100%);
+            z-index: 1;
+        }
+
+        .hero-homepage .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        .hero-text-container {
+            max-width: 600px;
+            padding-left: 2rem;
+        }
+
+        .hero-homepage h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #fff;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-homepage .tagline {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: inline-block;
+            position: relative;
+        }
+
+        .hero-homepage .tagline::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .hero-homepage .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .hero-homepage .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-homepage .btn {
+            padding: 1rem 2rem;
+            font-size: 0.95rem;
+            border-radius: 6px;
+        }
+
+        .hero-homepage .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .hero-homepage .btn-secondary:hover {
+            background: rgba(253, 205, 4, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        /* Stats bar */
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-stat {
+            text-align: left;
+        }
+
+        .hero-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .hero-stat-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        /* Scroll indicator repositioned */
+        .hero-homepage .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        /* Floating elements for visual interest */
+        .hero-float-element {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            filter: blur(60px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-float-element.el-1 {
+            width: 400px;
+            height: 400px;
+            top: 20%;
+            left: 5%;
+            animation: float-slow 8s ease-in-out infinite;
+        }
+
+        .hero-float-element.el-2 {
+            width: 300px;
+            height: 300px;
+            bottom: 30%;
+            left: 15%;
+            animation: float-slow 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -20px); }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 1024px) {
+            .hero-homepage .hero-content {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .hero-text-container {
+                padding-left: 0;
+                max-width: 700px;
+            }
+
+            .hero-homepage .tagline::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .hero-homepage .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-homepage .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-stat {
+                text-align: center;
+            }
+
+            .hero-background::after {
+                background: linear-gradient(
+                    180deg,
+                    rgba(10, 10, 10, 0.3) 0%,
+                    rgba(10, 10, 10, 0.5) 30%,
+                    rgba(10, 10, 10, 0.8) 60%,
+                    rgba(10, 10, 10, 0.95) 100%
+                );
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-homepage {
+                min-height: calc(100vh - 60px);
+                min-height: calc(100svh - 60px);
+            }
+
+            .hero-homepage .hero-content {
+                padding: 1.5rem;
+            }
+
+            .hero-homepage h1 {
+                font-size: 2.2rem;
+                letter-spacing: -1px;
+            }
+
+            .hero-homepage .tagline {
+                font-size: 0.9rem;
+                letter-spacing: 2px;
+            }
+
+            .hero-homepage .hero-description {
+                font-size: 1rem;
+            }
+
+            .hero-homepage .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-homepage .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+                flex-wrap: wrap;
+            }
+
+            .hero-stat-value {
+                font-size: 1.5rem;
+            }
+
+            .hero-background::after {
+                background: linear-gradient(
+                    180deg,
+                    rgba(10, 10, 10, 0.3) 0%,
+                    rgba(10, 10, 10, 0.6) 40%,
+                    rgba(10, 10, 10, 0.9) 70%,
+                    rgba(10, 10, 10, 1) 100%
+                );
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-homepage h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .hero-stat-value {
+                font-size: 1.3rem;
+            }
+
+            .hero-stat-label {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
 </head>
-<body>
+<body class="no-header-padding">
     <header>
         <nav>
             <a href="/" class="logo">
                 <img src="/images/logo.png" alt="Georgia State Roleplay Logo" class="logo-image">
             </a>
+            <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
+                <li><a href="/marketplace/home">Marketplace</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/blog">Blog</a></li>
                 <li><a href="/faq">FAQ</a></li>
-                <li><a href="/contact">Contact</a></li>
                 <li><a href="/applications" class="btn">Apply</a></li>
             </ul>
+            <div class="nav-overlay"></div>
         </nav>
     </header>
 
     <main>
-        <section class="hero">
-            <div class="hero-content fade-in">
-                <h1>Georgia State Roleplay</h1>
-                <p class="tagline">Roleplay you can rely on.</p>
-                <p>Welcome to Georgia State Roleplay, a serious roleplay community where beginners and experts alike can thrive. Join our semi-whitelisted server and experience quality roleplay in a professional environment.</p>
-                <div class="hero-buttons">
-                    <a href="https://discord.gg/KC2HT2R9K2" class="btn" target="_blank">Join Discord</a>
-                    <a href="/applications" class="btn btn-secondary">Apply Now</a>
-                    <a href="/about" class="btn btn-secondary">Learn More</a>
+        <section class="hero-homepage">
+            <!-- Background Image -->
+            <div class="hero-background">
+                <img src="/images/hero-bg.jpg" alt="" aria-hidden="true" onerror="this.style.display='none'">
+            </div>
+
+            <!-- Floating glow elements -->
+            <div class="hero-float-element el-1"></div>
+            <div class="hero-float-element el-2"></div>
+
+            <!-- Content -->
+            <div class="hero-content">
+                <div class="hero-text-container fade-in">
+                    <p class="tagline">Roleplay you can rely on</p>
+                    <h1>Georgia State<br>Roleplay</h1>
+                    <p class="hero-description">
+                        A serious roleplay community where beginners and experts alike can thrive. 
+                        Join our semi-whitelisted server and experience quality roleplay in a professional environment.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="https://discord.gg/KC2HT2R9K2" class="btn" target="_blank">Join Discord</a>
+                        <a href="/applications" class="btn btn-secondary">Apply Now</a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">500+</div>
+                            <div class="hero-stat-label">Members</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">24/7</div>
+                            <div class="hero-stat-label">Active</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-value">Serious</div>
+                            <div class="hero-stat-label">Roleplay</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -125,11 +493,11 @@
                     </ul>
                 </div>
                 <div>
-                    <h4>Resources</h4>
+                    <h4>Marketplace</h4>
                     <ul>
-                        <li><a href="/blog">Patch Notes</a></li>
-                        <li><a href="/faq">FAQ</a></li>
-                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/marketplace/home">Store Home</a></li>
+                        <li><a href="/marketplace/buy">Products</a></li>
+                        <li><a href="/marketplace/policy">Store Policy</a></li>
                     </ul>
                 </div>
             </div>

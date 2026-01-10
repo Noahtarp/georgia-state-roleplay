@@ -5,6 +5,12 @@
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize header scroll effect
+    initHeaderScroll();
+    
+    // Initialize mobile navigation
+    initMobileNav();
+    
     // Initialize scroll animations
     initScrollAnimations();
     
@@ -14,6 +20,90 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize FAQ
     initFAQ();
 });
+
+/**
+ * Initialize header scroll effect
+ * Adds 'scrolled' class when page is scrolled
+ */
+function initHeaderScroll() {
+    const header = document.querySelector('header');
+    if (!header) return;
+    
+    const scrollThreshold = 50;
+    
+    function updateHeaderState() {
+        if (window.scrollY > scrollThreshold) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    }
+    
+    // Initial check
+    updateHeaderState();
+    
+    // Listen for scroll
+    window.addEventListener('scroll', updateHeaderState, { passive: true });
+}
+
+/**
+ * Initialize mobile navigation hamburger menu
+ */
+function initMobileNav() {
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
+    
+    if (!hamburger || !navLinks) return;
+    
+    function toggleMenu() {
+        const isActive = hamburger.classList.contains('active');
+        
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        if (navOverlay) navOverlay.classList.toggle('active');
+        body.classList.toggle('menu-open');
+        
+        // Update accessibility
+        hamburger.setAttribute('aria-expanded', !isActive);
+    }
+    
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+        if (navOverlay) navOverlay.classList.remove('active');
+        body.classList.remove('menu-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+    }
+    
+    // Toggle on hamburger click
+    hamburger.addEventListener('click', toggleMenu);
+    
+    // Close on overlay click
+    if (navOverlay) {
+        navOverlay.addEventListener('click', closeMenu);
+    }
+    
+    // Close on nav link click
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && hamburger.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+    
+    // Close on window resize if menu is open
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && hamburger.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+}
 
 /**
  * Initialize scroll-triggered animations

@@ -168,6 +168,48 @@
             border-color: var(--primary-color);
             color: var(--primary-color);
         }
+
+        /* Mobile responsive for applications */
+        @media (max-width: 768px) {
+            .application-types {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .application-type-card {
+                padding: 1.5rem;
+            }
+
+            .application-type-card .card-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .application-type-card h3 {
+                font-size: 1.15rem;
+            }
+
+            .selected-type-header h3 {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .application-type-card {
+                padding: 1.25rem;
+            }
+
+            .application-type-card .card-icon {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 1rem;
+            }
+
+            .application-type-card .card-icon svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -176,14 +218,20 @@
             <a href="/" class="logo">
                 <img src="/images/logo.png" alt="Georgia State Roleplay Logo" class="logo-image">
             </a>
+            <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
+                <li><a href="/marketplace/home">Marketplace</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/blog">Blog</a></li>
                 <li><a href="/faq">FAQ</a></li>
-                <li><a href="/contact">Contact</a></li>
                 <li><a href="/applications" class="btn">Apply</a></li>
             </ul>
+            <div class="nav-overlay"></div>
         </nav>
     </header>
 
