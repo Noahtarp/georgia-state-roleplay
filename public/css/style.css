@@ -207,6 +207,15 @@ nav {
     align-items: center;
 }
 
+/* Hide any stray text nodes in nav */
+nav {
+    font-size: 0;
+}
+
+nav > * {
+    font-size: 1rem;
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -232,6 +241,7 @@ nav {
     list-style: none;
     gap: 2rem;
     align-items: center;
+    margin-left: auto;
 }
 
 .nav-links li {
@@ -277,16 +287,18 @@ nav {
 
 /* Hamburger Menu */
 .hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 20px;
-    cursor: pointer;
-    z-index: 1001;
-    padding: 0;
-    background: transparent;
-    border: none;
+    display: none !important;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    pointer-events: none;
+}
+
+/* Mobile Navigation Overlay - hidden on desktop */
+.nav-overlay {
+    display: none !important;
 }
 
 .hamburger span {
@@ -312,9 +324,8 @@ nav {
     transform: translateY(-8.5px) rotate(-45deg);
 }
 
-/* Mobile Navigation Overlay */
-.nav-overlay {
-    display: none;
+.nav-overlay.active {
+    display: block !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -324,12 +335,6 @@ nav {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     z-index: 998;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.nav-overlay.active {
-    display: block;
     opacity: 1;
 }
 
@@ -1280,10 +1285,24 @@ footer ul li {
 @media (max-width: 768px) {
     /* Show hamburger, hide nav links */
     .hamburger {
-        display: flex;
+        display: flex !important;
+        visibility: visible !important;
+        width: 28px !important;
+        height: 20px !important;
+        overflow: visible !important;
+        position: relative !important;
+        pointer-events: auto !important;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+        z-index: 1001;
+        padding: 0;
+        background: transparent;
+        border: none;
     }
     
     .nav-links {
+        margin-left: 0;
         position: fixed;
         top: 0;
         right: -100%;

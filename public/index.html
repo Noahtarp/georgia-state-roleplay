@@ -184,10 +184,54 @@
         /* Scroll indicator repositioned */
         .hero-homepage .scroll-indicator {
             position: absolute;
-            bottom: 40px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-homepage .scroll-indicator span {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-homepage .scroll-indicator .scroll-arrow {
+            width: 26px;
+            height: 42px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-homepage .scroll-indicator .scroll-arrow::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            animation: scrollDown 2s infinite;
+        }
+
+        @keyframes scrollDown {
+            0% {
+                opacity: 1;
+                top: 8px;
+            }
+            100% {
+                opacity: 0;
+                top: 24px;
+            }
         }
 
         /* Floating elements for visual interest */
